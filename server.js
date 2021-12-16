@@ -35,11 +35,13 @@ const bufferUpload = async (buffer) => {
   });
 };
 
+app.use(express.static('public'))
+
 app.post("/upload", multerSingle.single("image"), async (req, res) => {
   const { buffer } = req.file;
   try {
     const { secure_url } = await bufferUpload(buffer);
-    date = new Date().getUTCDate();
+    date = new Date();
     console.log("Successful upload at: ", date);
     res.status(200).send(`Successfully uploaded, url: ${secure_url}`);
   } catch (error) {
